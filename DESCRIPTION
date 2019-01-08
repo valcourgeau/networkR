@@ -1,0 +1,15 @@
+Package: networkR
+Type: Package
+Title: Continuous-time Statistical Network Modelling
+Version: 0.1.0
+Authors@R: person("Valentin", "Courgeau", 
+                  email = "valentin.courgeau15@imperial.ac.uk",
+                  role = c("aut", "cre"))
+Description: This packages implements from network-wide to node-scale
+    statistical modelling of networks (graphs) using Lévy-driven Ornstein-
+    Uhlenbeck processes.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+Suggests:
