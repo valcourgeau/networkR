@@ -1,4 +1,4 @@
-source("R/utils/packages_loader.R")
+source("R/utils_packages_loader.R")
 
 
 #' Fit a 1-dimensional Ornstein-Uhlenbeck model to the data.
@@ -10,9 +10,9 @@ source("R/utils/packages_loader.R")
 #' @examples
 #' a <- 2
 #' sigma <- 0.1
-#' times <- 1:100
-#' data <- rep(0, 100)
-#' for(i in 2:100){
+#' times <- 1:10000
+#' data <- rep(0, 10000)
+#' for(i in 2:10000){
 #'     data[i] <- data[i-1] - a * data[i-1] +
 #'                rnorm(n=1, sd=sigma)
 #' }
@@ -26,8 +26,8 @@ NOUfit1D <- function(times, data, threshold){
 
   diff_filtered <- DataFiltering(data,
                                  thresholds = threshold,
-                                 diff_values=T, one_d = T)
-  diff_times <- TimeMatrix(times = times, ncol=1, one_d=T)
+                                 diff_values=T)
+  diff_times <- TimeMatrix(times = times, ncol=1)
 
   mle_estimate_up <- data[-N] * diff_filtered
   mle_estimate_down <- data[-N]^2 * diff_times

@@ -1,4 +1,6 @@
-source("R/utils/packages_loader.R")
+source("R/utils_packages_loader.R")
+
+
 
 
 #' Ensures matrix has non-zero entries set to one.
@@ -25,6 +27,7 @@ EnsureTopo <- function(nw_topo){
 
 #' Row-standardise the given matrix with zero diagonal.
 #' @param nw_topo Matrix to standardise (adjacency or laplacian).
+#' @return Row-standardised adjacency matrix.
 #' @examples
 #' nw_topo <- c(2,1,1,
 #'              0,2,3,
@@ -48,8 +51,7 @@ StdTopo <- function(nw_topo){
 #' @param data Matrix of data to be filtered.
 #' @param thresholds Continuous threshold for increments.
 #' @param diff_values Boolean to return differenciated values.
-#' @param one_d Boolean it flag if input is one or multidimensional.
-#' @returns Filtered data with respect to increments smaller than
+#' @return Filtered data with respect to increments smaller than
 #'     thresholds. Output as same size as data or shorter by one row
 #'     if diff_values=TRUE.
 #' @examples
@@ -59,10 +61,14 @@ StdTopo <- function(nw_topo){
 #' data <- t(matrix(data, ncol=3))
 #' DataFiltering(data, c(2,3,6))
 #' DataFiltering(data, c(2,3,6), diff = T)
-DataFiltering <- function(data, thresholds, diff_values=F, one_d=F){
+DataFiltering <- function(data, thresholds, diff_values=F){
   # Shall we have the first or second point when diff_values=F?
   filtered_data <- diff(data)
-
+  if(class(data) == "matrix"){
+    one_d <- F
+  }else{
+    one_d <- T
+  }
   if(one_d){
     N <- length(data)
     indicator_data <- (abs(filtered_data) <= thresholds)
@@ -88,7 +94,7 @@ DataFiltering <- function(data, thresholds, diff_values=F, one_d=F){
 #'
 #' @param times vector of timestamps.
 #' @param ncol number of columns, i.e. dimensions.
-#' @returns Matrix of time increments with ncol columns.
+#' @return Matrix of time increments with ncol columns.
 #' @examples
 #' times <- c(1,2,4,7,11)
 #' TimeMatrix(times, ncol = 2)
@@ -99,7 +105,7 @@ TimeMatrix <- function(times, ncol){
   # creating increments
   times <- diff(times)
 
-  if(one_d == 1){
+  if(ncol){
     return(times)
   }else{
     return(t(matrix(rep(times, each=ncol), nrow=ncol)))
