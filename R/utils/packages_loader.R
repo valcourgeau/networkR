@@ -18,6 +18,9 @@ pckgs_to_load <- c(
   "lintr"
 )
 
+# Instructions to run everytime
+lintr::lint_package()
+
 check.packages <- function(pkg){
   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
   if (length(new.pkg))
